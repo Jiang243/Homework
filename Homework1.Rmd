@@ -2,5 +2,8 @@
 title: "Homework1"
 output: html_document
 ---
+test word
+
+test word
 
 test word
