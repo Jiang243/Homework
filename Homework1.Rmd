@@ -1,9 +1,83 @@
 ---
 title: "Homework1"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
-test word
+Question1:
+For each observation of the predictor measurement(s) xi, i = 1, . . . , n there is an associated response measurement yi. We wish to fit a model that relates the response to the predictors, with the aim of accurately predicting the response for future observations (prediction) or better understanding the relationship between the response and the predictors (inference). Supervised learning can be separated into two types of problem: regression and classification. By contrast, unsupervised learning describes the somewhat more chal- lenging situation in which for every observation i = 1,...,n, we observe a vector of measurements xi but no associated response yi. It is not pos- sible to fit a linear regression model, since there is no response variable to predict. The main distinction between the two approaches is whether there is an associated response measurement yi
+(from page26 of book)
 
-test word
+Question2:
 
-test word
+In regression model, the response variable Y is quantitative. Regression model help us to understand the relationship between dependent and independent variables and predict numerical values like price and blood pressure. In classification model, the response variable is qualitative. Classification model help us to classify spam/not spam email or survived/died. Logistic regression, decision tree   and naive bayes are some examples of classification algorithms
+(from lecture1 31 33)
+
+Question3:
+Commonly used metrics for regression ML problems: Mean Squared Error(MSE) Root Mean Squared Error(RMSE)
+Commonly used metrics for classification ML problems: Log Loss ROC AUC
+
+Question4:
+Descripitve models: choose model to best visually emphasize a trend in data ex. using a line on a scatterplot
+Inferential models: what features are significant? Aim is to test theories Possibly causal claims
+State relationship between outcome and predictors
+Predictive models: What combo of features fits best? Aim is to predict Y with minimum reducible error
+Not focused on hypothesis tests
+(from lecture2 7)
+
+Question5:
+Mechanistic:
+Empirically driven:
+
+Question6:
+
+
+
+```{r}
+library(tidyverse)
+library(tidymodels)
+library(ISLR)
+```
+Exercise1:
+
+```{r}
+data <- mpg$hwy
+data1 = data.frame(value = data)
+ggplot(data1, aes(x=data))+geom_histogram()
+```
+26 highway miles per gallon are the most common value
+
+Exercise2:
+```{r}
+ggplot(mpg, aes(x=hwy, y=cty)) + geom_point()
+```
+```{r}
+lm(cty ~ hwy, data = mpg)
+```
+The trend of points seem upward slopping. There is relationship between cty and hwy, which means if we increase 1 highway miles per gallon, our city miles per gallon will increase.
+
+
+Exercise3
+```{r}
+ggplot(mpg, aes(x= manufacturer)) + geom_bar(stat="identity")
+```
+
+
+Exercise4
+```{r}
+ggplot(mpg, aes(x=cyl, y=hwy)) + 
+    geom_boxplot()
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
