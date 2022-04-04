@@ -4,97 +4,102 @@ output:
   pdf_document: default
   html_document: default
 ---
-Question1:
+
+##### Question1:
+
 For each observation of the predictor measurement(s) xi, i = 1, . . . , n there is an associated response measurement yi. We wish to fit a model that relates the response to the predictors, with the aim of accurately predicting the response for future observations (prediction) or better understanding the relationship between the response and the predictors (inference). Supervised learning can be separated into two types of problem: regression and classification. By contrast, unsupervised learning describes the somewhat more challenging situation in which for every observation i = 1,...,n, we observe a vector of measurements xi but no associated response yi. It is not possible to fit a linear regression model, since there is no response variable to predict. The main distinction between the two approaches is whether there is an associated response measurement yi
 (from page26 of book)
 
-Question2:
+##### Question2:
 
-In regression model, the response variable Y is quantitative. Regression model help us to understand the relationship between dependent and independent variables and predict numerical values like price and blood pressure. In classification model, the response variable is qualitative. Classification model help us to classify spam/not spam email or survived/died. Logistic regression, decision tree   and naive bayes are some examples of classification algorithms
+In regression model, the response variable Y is quantitative. Regression model help us to understand the relationship between dependent and independent variables and predict numerical values like price and blood pressure. In classification model, the response variable is qualitative. Classification model help us to classify spam/not spam email or survived/died.
 (from lecture1 31 33)
 
-Question3:
-Commonly used metrics for regression ML problems: Mean Squared Error(MSE) Root Mean Squared Error(RMSE)
-Commonly used metrics for classification ML problems: Log Loss ROC AUC
+##### Question3:
 
-Question4:
-Descripitve models: choose model to best visually emphasize a trend in data ex. using a line on a scatterplot
-Inferential models: what features are significant? Aim is to test theories Possibly causal claims
+Commonly used metrics for regression ML problems: Mean Squared Error(MSE) Root Mean Squared Error(RMSE)
+Commonly used metrics for classification ML problems: Log Loss ROC
+
+##### Question4:
+
++ Descripitve models: choose model to best visually emphasize a trend in data ex. using a line on a scatterplot
++ Inferential models: what features are significant? Aim is to test theories Possibly causal claims
 State relationship between outcome and predictors
-Predictive models: What combo of features fits best? Aim is to predict Y with minimum reducible error
-Not focused on hypothesis tests
++ Predictive models: What combo of features fits best? Aim is to predict Y with minimum reducible error (not focused on hypothesis tests)
 (from lecture2 7)
 
-Question5:
-Mechanistic: Based on Assume a parametric form for f and won't match true unknown f 
-Can add more parameters to become more flexibility Have the problem of the overfitting
-Empirically driven: No assumption about f and required a larger number of observations 
-Much more flexible by default Have the problem of the overfitting
-Empirically driven is easier to understand.
+##### Question5:
 
-Question6:
++ Mechanistic: Based on Assume a parametric form for f and won't match true unknown f 
+Can add more parameters to become more flexibility Have the problem of the overfitting
++ Empirically driven: No assumption about f and required a larger number of observations 
+Much more flexible by default Have the problem of the overfitting
+
+Mechanistic is easier to understand. Empirically-driven model has more flexibility, which means more error and sometimes hard to interpreter
+(from lecture)
+
+##### Question6:
+
 Given a voter’s profile/data, how likely is it that they will vote in favor of the candidate?
-This is a predictive question. We want to predict the possibility of voters will vote in favor of the candidate given their data.
+This is a predictive question. We want to predict the possibility of voters will vote in favor of the candidate given their data. candidate data is predictor variable and probability of voter in favor of the candidate is response variable
 
 How would a voter’s likelihood of support for the candidate change if they had personal contact with the candidate?
 This is a inferential question. We want to know how personal contact with the candidate may influence voters
-
-
-
-
-
 
 ```{r}
 library(tidyverse)
 library(tidymodels)
 library(ISLR)
 ```
-Exercise1:
+##### Exercise1
 
 ```{r}
 ggplot(data = mpg)+geom_histogram(mapping = aes(x = hwy))
 ```
-26 highway miles per gallon are the most common value
 
-Exercise2:
+26 highway miles per gallon is the most common value and marjority of hwy is range between 15 and 30
+
+
+##### Exercise2
 ```{r}
-ggplot(data = mpg) + 
-  geom_point(mapping = aes(x = hwy, y = cty))
+ggplot(data = mpg) + geom_point(mapping = aes(x = hwy, y = cty))
 ```
-The trend of points seem upward slopping. There is relationship between cty and hwy, which means if we increase 1 highway miles per gallon, our city miles per gallon will increase.
+
+The trend of points seem upward slopping. There is relationship between cty and hwy, which means if we increase highway miles per gallon, our city miles per gallon will increase linearly.
 
 
-Exercise3
+##### Exercise3
 ```{r}
-ggplot(data = mpg) + 
-  geom_bar(mapping = aes(y = reorder(manufacturer, manufacturer, function(x) length(x)))) + ylab("manufacturer")
+ggplot(data = mpg) + geom_bar(mapping = aes(y = reorder(manufacturer, manufacturer, function(x) length(x)))) + ylab("manufacturer")
 ```
+
 Dodge produced the most car and Lincoln produced the least
 
-Exercise4
+
+#### Exercise4
 ```{r}
-ggplot(mpg) + 
-    geom_boxplot(mapping = aes(x=cyl, y=hwy))
+ggplot(mpg) + geom_boxplot(mapping = aes(x=cyl, y=hwy,group = cyl))
 ```
 
+We can find that when cyl is small, hwy will have a larger value. There may be a negative relationship between cyl and hwy
 
 
-Exercise 5
+#### Exercise 5
 ```{r}
 library(corrplot)
 M = cor(mpg[, -c(1,2,6,7,10,11)])
-corrplot(M, method = 'square', order = 'FPC', type = 'lower', diag = FALSE)
+corrplot(M, type = 'lower')
 ```
-cyl: number of cylinders
-cty: city miles per gallon
-hwy: highway miles per gallon
-displ: engine displacement, in litres
+
++ cyl number of cylinders
++ cty city miles per gallon
++ hwy highway miles per gallon
++ displ engine displacement, in litres
 
 cyl is negative correlated with cty and hwy and positive correlated with displ
-displ is negative correlated with cty and hwy
-hwy is positively correlated with cty
-These relationship makes sense to me. The vehicle have more number of cylinders, which consume more
-gasoline
+displ is negative correlated with cty and hwy positvie corrlaled with cyl
+hwy is positively correlated with cty and negative correlated with cyl and displ
+These relationship makes sense to me. For example, the vehicle have more number of cylinders, which may consume more gasoline
 
 
 
