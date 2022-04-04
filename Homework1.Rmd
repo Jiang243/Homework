@@ -5,7 +5,7 @@ output:
   html_document: default
 ---
 Question1:
-For each observation of the predictor measurement(s) xi, i = 1, . . . , n there is an associated response measurement yi. We wish to fit a model that relates the response to the predictors, with the aim of accurately predicting the response for future observations (prediction) or better understanding the relationship between the response and the predictors (inference). Supervised learning can be separated into two types of problem: regression and classification. By contrast, unsupervised learning describes the somewhat more chal- lenging situation in which for every observation i = 1,...,n, we observe a vector of measurements xi but no associated response yi. It is not pos- sible to fit a linear regression model, since there is no response variable to predict. The main distinction between the two approaches is whether there is an associated response measurement yi
+For each observation of the predictor measurement(s) xi, i = 1, . . . , n there is an associated response measurement yi. We wish to fit a model that relates the response to the predictors, with the aim of accurately predicting the response for future observations (prediction) or better understanding the relationship between the response and the predictors (inference). Supervised learning can be separated into two types of problem: regression and classification. By contrast, unsupervised learning describes the somewhat more challenging situation in which for every observation i = 1,...,n, we observe a vector of measurements xi but no associated response yi. It is not possible to fit a linear regression model, since there is no response variable to predict. The main distinction between the two approaches is whether there is an associated response measurement yi
 (from page26 of book)
 
 Question2:
@@ -26,10 +26,21 @@ Not focused on hypothesis tests
 (from lecture2 7)
 
 Question5:
-Mechanistic:
-Empirically driven:
+Mechanistic: Based on Assume a parametric form for f and won't match true unknown f 
+Can add more parameters to become more flexibility Have the problem of the overfitting
+Empirically driven: No assumption about f and required a larger number of observations 
+Much more flexible by default Have the problem of the overfitting
+Empirically driven is easier to understand.
 
 Question6:
+Given a voter’s profile/data, how likely is it that they will vote in favor of the candidate?
+This is a predictive question. We want to predict the possibility of voters will vote in favor of the candidate given their data.
+
+How would a voter’s likelihood of support for the candidate change if they had personal contact with the candidate?
+This is a inferential question. We want to know how personal contact with the candidate may influence voters
+
+
+
 
 
 
@@ -41,36 +52,49 @@ library(ISLR)
 Exercise1:
 
 ```{r}
-data <- mpg$hwy
-data1 = data.frame(value = data)
-ggplot(data1, aes(x=data))+geom_histogram()
+ggplot(data = mpg)+geom_histogram(mapping = aes(x = hwy))
 ```
 26 highway miles per gallon are the most common value
 
 Exercise2:
 ```{r}
-ggplot(mpg, aes(x=hwy, y=cty)) + geom_point()
-```
-```{r}
-lm(cty ~ hwy, data = mpg)
+ggplot(data = mpg) + 
+  geom_point(mapping = aes(x = hwy, y = cty))
 ```
 The trend of points seem upward slopping. There is relationship between cty and hwy, which means if we increase 1 highway miles per gallon, our city miles per gallon will increase.
 
 
 Exercise3
 ```{r}
-ggplot(mpg, aes(x= manufacturer)) + geom_bar(stat="identity")
+ggplot(data = mpg) + 
+  geom_bar(mapping = aes(y = reorder(manufacturer, manufacturer, function(x) length(x)))) + ylab("manufacturer")
 ```
-
+Dodge produced the most car and Lincoln produced the least
 
 Exercise4
 ```{r}
-ggplot(mpg, aes(x=cyl, y=hwy)) + 
-    geom_boxplot()
+ggplot(mpg) + 
+    geom_boxplot(mapping = aes(x=cyl, y=hwy))
 ```
 
 
 
+Exercise 5
+```{r}
+library(corrplot)
+M = cor(mpg[, -c(1,2,6,7,10,11)])
+corrplot(M, method = 'square', order = 'FPC', type = 'lower', diag = FALSE)
+```
+cyl: number of cylinders
+cty: city miles per gallon
+hwy: highway miles per gallon
+displ: engine displacement, in litres
+
+cyl is negative correlated with cty and hwy and positive correlated with displ
+displ is negative correlated with cty and hwy
+hwy is positively correlated with cty
+These relationship makes sense to me. The vehicle have more number of cylinders, which consume more
+gasoline
 
 
 
