@@ -1,8 +1,9 @@
 ---
 title: "Homework1"
+Name:  "Dingan Jiang (9412743)"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 ##### Question1:
@@ -96,9 +97,9 @@ corrplot(M, type = 'lower')
 + hwy highway miles per gallon
 + displ engine displacement, in litres
 
-cyl is negative correlated with cty and hwy and positive correlated with displ
-displ is negative correlated with cty and hwy positvie corrlaled with cyl
-hwy is positively correlated with cty and negative correlated with cyl and displ
+cyl is negative correlated with cty and hwy and positive correlated with displ\
+displ is negative correlated with cty and hwy positvie corrlaled with cyl\
+hwy is positively correlated with cty and negative correlated with cyl and displ\
 These relationship makes sense to me. For example, the vehicle have more number of cylinders, which may consume more gasoline
 
 
